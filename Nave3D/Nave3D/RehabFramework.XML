@@ -1,0 +1,1126 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>RehabFramework</name>
+    </assembly>
+    <members>
+        <member name="T:RehabFramework.Formulario">
+            <summary>
+            clase del formulario, que basicamente es una lista de cuadros de texto
+            </summary>
+        </member>
+        <member name="M:RehabFramework.Formulario.#ctor(Microsoft.Xna.Framework.Graphics.GraphicsDevice,Microsoft.Xna.Framework.Vector2,System.Single,Microsoft.Xna.Framework.Graphics.SpriteFont,Microsoft.Xna.Framework.Color,Microsoft.Xna.Framework.Color,Microsoft.Xna.Framework.Graphics.Texture2D,Microsoft.Xna.Framework.Graphics.Texture2D,System.Single)">
+            <summary>
+            constructor del formulario, recibe un graphics device para crear la textura blanca, el vector de posicion
+            el ancho del formulario, la fuente, el color de fondo, el color de la fuente, las texturas de los botones
+            y la altura del formulario
+            </summary>
+            <param name="gd">dispositivo grafico de xna</param>
+            <param name="posinicio">esquina superior izquierda del formulario na dibuja</param>
+            <param name="width">ancho del formulario</param>
+            <param name="fuente">tipo de letra del formulario</param>
+            <param name="cfondo">color de fondo del formulario</param>
+            <param name="cfuente">color de la fuente</param>
+            <param name="tbfondo1">textura del boton que se dibuja cuando el mouse esta sobre una opcion del formulario</param>
+            <param name="tbfondo2">textura del boton que se dibuja cuando le das click con el mouse</param>
+            <param name="hlimit">limite de altura del formulario</param>
+        </member>
+        <member name="M:RehabFramework.Formulario.AddCuadro(Microsoft.Xna.Framework.Graphics.GraphicsDevice,System.String,RehabFramework.CuadroDeTexto.Tipo,System.Int32,System.EventHandler)">
+            <summary>
+            añade un cuadro de texto al formulario, recibe el graphics device, el titulo del cuadro de texto
+            el tipo de cuadro de texto, y la longitud máxima de la cadena del cuadro de texto
+            </summary>
+            <param name="gd">dispositivo grafico de xna</param>
+            <param name="titulo">cadena de caracteres del cuadro</param>
+            <param name="tipo">tipo de cuadro</param>
+            <param name="longitud">longitud de caracteres maximo a recibir</param>
+            <param name="eh">event handler asociado al cuadro</param>
+        </member>
+        <member name="M:RehabFramework.Formulario.RemoveCuadro(System.Int32)">
+            <summary>
+            quita un cuadro de texto del formulario, si el cuadro a quitar es el actual del formulario
+            entonces pone en -1 a actual para que ninguno sea el actual
+            </summary>
+            <param name="indice">indice del cuadro a remover</param>
+        </member>
+        <member name="M:RehabFramework.Formulario.SetActual(System.Int32)">
+            <summary>
+            cambia el actual del formulario y cambia el estado del anterior actual a no activo
+            y el nuevo actual a activo
+            </summary>
+            <param name="actual">indice del formulario actual</param>
+        </member>
+        <member name="M:RehabFramework.Formulario.ResetActual">
+            <summary>
+            reiniciar el indice actual
+            </summary>
+        </member>
+        <member name="M:RehabFramework.Formulario.ResetFormulario">
+            <summary>
+            reiniciar los elementos del formulario
+            </summary>
+        </member>
+        <member name="M:RehabFramework.Formulario.UpdateMouse">
+            <summary>
+             hace el update del formulario en base a las entradas del mouse, si se hace click izquierdo
+            en uno de los cuadros de texto, entonces ese se convierte en el actual y se pone activo
+             de la lista desplegable del cuadro de texto se obtiene cual se ha presionado, si es -1, 
+            no se ha presionado ninguno, de ser mayor a -1 el valor del presionado se toma el texto 
+            de su titulo y se coloca como el valor de la cadena del cuadro de texto. se actualiza el 
+            cuadro de texto correspondiente a la iteración del for y se actualiza el offset del 
+            formulario, se suma la altura del cuadro actual y si este esta activo, se suma la altura
+            de su lista desplegable. luego se actualizan las flechas de desplazamiento y se le asigna
+            al estado anterior del mouse el valor actual
+            </summary>
+        </member>
+        <member name="M:RehabFramework.Formulario.InBounds(System.Int32)">
+            <summary>
+            verifica que el indice este dentro del rango de la lista de cuadros de texto
+            </summary>
+            <param name="i">indice a verificar</param>
+            <returns>true si el indice se encuentra en rango</returns>
+        </member>
+        <member name="M:RehabFramework.Formulario.ResetFDraw">
+            <summary>
+            vuelve a poner el indice del primer cuadro de texto a dibujar en 0
+            </summary>
+        </member>
+        <member name="M:RehabFramework.Formulario.FlechaPresionada(Microsoft.Xna.Framework.Input.MouseState)">
+            <summary>
+            actualiza el estado de la flecha presionada, checa si se hizo click en la fecha
+             de arriba o en la de abajo o ninguna
+            </summary>
+            <param name="mstt">estado del mouse</param>
+        </member>
+        <member name="M:RehabFramework.Formulario.SobreTextBox(Microsoft.Xna.Framework.Input.MouseState,Microsoft.Xna.Framework.Vector2,System.Single,System.Single)">
+            <summary>
+            devuelve un booleano indicando si el mouse está sobre un área rectangular de la pantalla
+            recibe el estado del mouse, el vector de la posicion inicial, el ancho y la altura del área
+            a verificar
+            </summary>
+            <param name="mstt">estado del mouse</param>
+            <param name="posini">esquina superior izquierda del cuadro de texto</param>
+            <param name="w">ancho del cuadro de texto</param>
+            <param name="h">alto del cuadro de texto</param>
+            <returns>true si el mouse esta sobre el cuadro de texto y false en caso contrario</returns>
+        </member>
+        <member name="M:RehabFramework.Formulario.SobreTextBox(Microsoft.Xna.Framework.Input.MouseState,RehabFramework.CuadroDeTexto,Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            devuelve un booleano indicando si el mouse está sobre un área rectangular de la pantalla
+            recibe el estado del mouse, el cuadro de texto y el offset del cuadro de texto
+            </summary>
+            <param name="mstt">estado del mouse</param>
+            <param name="cuad">cuadro de texto a comparar</param>
+            <param name="offset">offset de la posicion de cada recuadro</param>
+            <returns>true si el mouse esta sobre el cuadro de texto y false si no lo está</returns>
+        </member>
+        <member name="M:RehabFramework.Formulario.LimiteSuperior">
+            <summary>
+             devuelve el numero de cuadros de texto que a partir de fdraw caben dentro de la altura hlimit
+            del formulario
+            </summary>
+            <returns>numero de cuadros que caben en la altura</returns>
+        </member>
+        <member name="M:RehabFramework.Formulario.ModPosicion(Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            modifica la posicion del formulario, incluyendo la posicion de los cuadros de texto ya agregados
+            a la lista del formulario
+            </summary>
+            <param name="npos">nueva posicion del formulario</param>
+        </member>
+        <member name="M:RehabFramework.Formulario.DibujaFormulario(Microsoft.Xna.Framework.Graphics.SpriteBatch)">
+            <summary>
+            dibuja el formulario, usa un offset para asignarle dinamicamente la altura al dibujo de cada cuadro
+            de texto, el offset se actualiza igual en el UpdateMouse(), tambien se dibujan las flechas de
+            desplazamiento, de color gris si no estan presionadas y y estan presionadas de color gris oscuro
+            </summary>
+            <param name="sb">spritebatch</param>
+        </member>
+        <member name="T:RehabFramework.MOpciones">
+            <summary>
+            clase del menu de opciones que basicamente es una lista de recuadros, puede ser vertical u horizontal
+            </summary>
+        </member>
+        <member name="M:RehabFramework.MOpciones.Presionado">
+            <summary>
+            metodo que te dice que elemento del menu fue presionado
+            </summary>
+            <returns>regresa el indice del elemento del menu presionado</returns>
+        </member>
+        <member name="M:RehabFramework.MOpciones.#ctor(Microsoft.Xna.Framework.Graphics.GraphicsDevice,Microsoft.Xna.Framework.Vector2,System.Single,Microsoft.Xna.Framework.Graphics.SpriteFont,Microsoft.Xna.Framework.Graphics.SpriteFont,Microsoft.Xna.Framework.Color,Microsoft.Xna.Framework.Color,Microsoft.Xna.Framework.Graphics.Texture2D,Microsoft.Xna.Framework.Graphics.Texture2D,System.Single)">
+            <summary>
+            constructor del menu de opciones, recibe un graphics device para crear la textura blanca, la posicion
+            de inicio del menu, el ancho, las fuentesd e titulo y descripcion, colores de fondo y fuente, las
+            texturas de boton y la altura del menu
+            </summary>
+            <param name="gd">dispositivo grafico</param>
+            <param name="posinicio">posicion inicial del menú de opciones</param>
+            <param name="width">ancho del menu de opciones</param>
+            <param name="ftitulo">tipo de fuente del titulo de las opciones</param>
+            <param name="fdescripcion">tipo de fuente de la descripciones de las opciones</param>
+            <param name="cfondo">color de fondo de las opciones del formulario</param>
+            <param name="cfuente">color de la fuente de las opciones del formulario</param>
+            <param name="tbfondo1">textura de fondo que aparece cuando pones el mouse sobre la opcion del menu</param>
+            <param name="tbfondo2">textura de fondo que aparece cuando le das click con el mouse a una opcion</param>
+            <param name="hlimit">limite de opciones del menu</param>
+        </member>
+        <member name="M:RehabFramework.MOpciones.InBounds(System.Int32)">
+            <summary>
+            se verifica si el indice esta en dentro de la lista de recuadros
+            </summary>
+            <param name="i">indice a comparar</param>
+            <returns>true si esta dentro del rango de opciones y false si no lo está</returns>
+        </member>
+        <member name="M:RehabFramework.MOpciones.ResetFDraw">
+            <summary>
+            se vuelve a poner en 0 el indice del primero a dibujar
+            </summary>
+        </member>
+        <member name="M:RehabFramework.MOpciones.FlechaPresionada(Microsoft.Xna.Framework.Input.MouseState)">
+            <summary>
+            actualiza el estado de la flecha presionada, checa si se hizo click en la fecha
+            de arriba o en la de abajo o ninguna
+            </summary>
+            <param name="mstt">estado del mouse</param>
+        </member>
+        <member name="M:RehabFramework.MOpciones.SobreRecuadro(Microsoft.Xna.Framework.Input.MouseState,Microsoft.Xna.Framework.Vector2,System.Single,System.Single)">
+            <summary>
+             devuelve un booleano indicando si el mouse está sobre un área rectangular de la pantalla
+            recibe el estado del mouse, el vector de la posicion inicial, el ancho y la altura del área
+            a verificar
+            </summary>
+            <param name="mstt">estado del mouse</param>
+            <param name="posini">esquina superior izquierda del recuadro</param>
+            <param name="w">ancho del recuadro</param>
+            <param name="h">altura del recuadro</param>
+            <returns>true si el mouse esta sobre el recuadro y false si no lo está</returns>
+        </member>
+        <member name="M:RehabFramework.MOpciones.SobreRecuadro(Microsoft.Xna.Framework.Input.MouseState,RehabFramework.Recuadro,Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            devuelve un booleano indicando si el mouse está sobre un área rectangular de la pantalla
+            recibe el estado del mouse, el recuadro y el offset del cuadro de texto
+            </summary>
+            <param name="mstt">estado del mouse</param>
+            <param name="rec">recuadro a comparar</param>
+            <param name="offset">offset del recuadro</param>
+            <returns>true si el mouse esta sobre el recuadro y false si no lo está</returns>
+        </member>
+        <member name="M:RehabFramework.MOpciones.UpdateKeyboard(Microsoft.Xna.Framework.Input.KeyboardState)">
+            <summary>
+            actualiza al menu de opciones en base a las entradas del teclado, no esta actualizado el metodo
+            y por ahora no es necesario usarlo para usar el menu de opciones
+            </summary>
+            <param name="kbs">estado del teclado</param>
+        </member>
+        <member name="M:RehabFramework.MOpciones.AddOpcion(Microsoft.Xna.Framework.Graphics.GraphicsDevice,System.String,System.String,Microsoft.Xna.Framework.Graphics.Texture2D,System.EventHandler)">
+            <summary>
+            Método que agrega un Recuadro al menú de opciones
+            </summary>
+            <param name="gd">GraphicsDevice</param>
+            <param name="titulo">Cadena del titulo del recuadro</param>
+            <param name="descripcion">Cadena de la descripción del Recuadro</param>
+            <param name="imagen">Texture2D para la imagen del Recuadro</param>
+            <param name="eh">Event Handler del Recuadro</param>
+        </member>
+        <member name="M:RehabFramework.MOpciones.DeleteOpcion(System.Int32)">
+            <summary>
+            elmimina un recuadro del menu de opciones
+            </summary>
+            <param name="i">indice de la opcion a borrar</param>
+        </member>
+        <member name="M:RehabFramework.MOpciones.AlturaEstandar">
+            <summary>
+            pone a todos los recuadros del menu la misma altura
+            </summary>
+        </member>
+        <member name="M:RehabFramework.MOpciones.LimiteSuperior">
+            <summary>
+            devuelve el numero de recuadros que a partir de fdraw caben dentro de la altura hlimit
+            del formulario
+            </summary>
+            <returns>numero de recuadro que caben</returns>
+        </member>
+        <member name="M:RehabFramework.MOpciones.ModPosicion(Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            modifica el vector de posicion del menu de opciones asi como de todos
+            los recuadros de su lista
+            </summary>
+            <param name="npos">nueva posicion del menu</param>
+        </member>
+        <member name="M:RehabFramework.MOpciones.Update">
+            <summary>
+            metodo que actualiza el menu de opciones
+            </summary>
+        </member>
+        <member name="M:RehabFramework.MOpciones.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch)">
+            <summary>
+            metodo de dibujo del menu nde opciones
+            </summary>
+            <param name="sb">spritebatch</param>
+        </member>
+        <member name="M:RehabFramework.MOpciones.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch,System.Boolean)">
+            <summary>
+            metodo de dibujo del menu de opciones indicando si se dibuja o no el fondo
+            </summary>
+            <param name="sb">spritebatch</param>
+            <param name="bfondo">booleano para indicar si se dibuja o no el fondo de los recuadros del menú</param>
+        </member>
+        <member name="T:RehabFramework.KbHandler">
+            <summary>
+            clase manejador de teclado
+            </summary>
+        </member>
+        <member name="F:RehabFramework.KbHandler.Letras">
+            <summary>
+             teclas de letras
+            </summary>
+        </member>
+        <member name="F:RehabFramework.KbHandler.NumerosTAN">
+            <summary>
+            teclas de los numeros del alfanumerico
+            </summary>
+        </member>
+        <member name="F:RehabFramework.KbHandler.NumerosTN">
+            <summary>
+            teclas de los numeros del numerico</summary>
+        </member>
+        <member name="F:RehabFramework.KbHandler.Simbolos">
+            <summary>
+            teclas de los simbolos
+            </summary>
+        </member>
+        <member name="M:RehabFramework.KbHandler.#ctor(System.EventHandler)">
+            <summary>
+            constructor del manejador del teclado, la cadena se inicia vacia
+            </summary>
+            <param name="eh">manejador de eventos del teclado</param>
+        </member>
+        <member name="M:RehabFramework.KbHandler.Update(System.Int32)">
+            <summary>
+            actualiza el manejador del teclado dependiendo de las entradas del teclado
+            </summary>
+            <param name="longitud">longitud de la cadena</param>
+        </member>
+        <member name="M:RehabFramework.KbHandler.AddNumeroTANToText(Microsoft.Xna.Framework.Input.Keys,System.Int32)">
+            <summary>
+            revisa los numeros del alfanumerico y agrega los presionados a la cadena
+            </summary>
+            <param name="key">tecla</param>
+            <param name="longitud">longitud de la cadena</param>
+        </member>
+        <member name="M:RehabFramework.KbHandler.AddNumeroTNToText(Microsoft.Xna.Framework.Input.Keys,System.Int32)">
+            <summary>
+            revisa los numeros del numerico y agrega los presionados a la cadena
+            </summary>
+            <param name="key">tecla presionada</param>
+            <param name="longitud">longitud de la cadena</param>
+        </member>
+        <member name="M:RehabFramework.KbHandler.AddLetraToText(Microsoft.Xna.Framework.Input.Keys,System.Int32)">
+            <summary>
+            revisa las letras, espacio y backspace y agrega los presionados a la cadena o borra el ultimo caracter
+            </summary>
+            <param name="key">tecla presionada</param>
+            <param name="longitud">longitud de la cadena presionada</param>
+        </member>
+        <member name="M:RehabFramework.KbHandler.CheckKey(Microsoft.Xna.Framework.Input.Keys)">
+            <summary>
+            verifica que se libera la tecla
+            </summary>
+            <param name="theKey">tecla presionada</param>
+            <returns>true si la tecla fue liberada y false si no fue asi</returns>
+        </member>
+        <member name="M:RehabFramework.KbHandler.VaciaCadena">
+            <summary>
+            vacia la cadena de entrada
+            </summary>
+        </member>
+        <member name="P:RehabFramework.KbHandler.Texto">
+            <summary>
+            cadena de entrada
+            </summary>
+        </member>
+        <member name="T:RehabFramework.Ayuda">
+            <summary>
+            clase quen contiene metodos varios de apoyo al framework
+            </summary>
+        </member>
+        <member name="M:RehabFramework.Ayuda.InvertirTextura(Microsoft.Xna.Framework.Graphics.Texture2D,System.Boolean,System.Boolean)">
+            <summary>
+            método que sirve para invertir una textura 
+            </summary>
+            <param name="original">textura original a invertir</param>
+            <param name="vertical">bandera que indica si se invertirá verticalmente</param>
+            <param name="horizontal">bandera que indica si se invertirá horizontalmente</param>
+            <returns>la textura original invertida</returns>
+        </member>
+        <member name="M:RehabFramework.Ayuda.SobreRectangulo(Microsoft.Xna.Framework.Input.MouseState,Microsoft.Xna.Framework.Vector2,System.Single,System.Single)">
+            <summary>
+            método que indica si el mouse está sobre el rectangulo
+            </summary>
+            <param name="mstt">estado actual del mouse</param>
+            <param name="posini">esquina superior izquierda del rectangulo</param>
+            <param name="w">ancho del rectangulo</param>
+            <param name="h">alto del rectangulo</param>
+            <returns>regresa true si el mouse esta sobre el rectangulo y false si no lo está</returns>
+        </member>
+        <member name="M:RehabFramework.Ayuda.AngleToVector(System.Single)">
+            <summary>
+            funcion que recibe un ángulo y devuelve un vector de 2 dimensiones
+            </summary>
+            <param name="angle">ángulo del vector de direccion</param>
+            <returns>vector de direccion con el angulo de inclinación de entrada</returns>
+        </member>
+        <member name="M:RehabFramework.Ayuda.VectorToAngle(Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            funcion que recibe un vector de 2 dimensiones y devuelve un ángulo
+            </summary>
+            <param name="vector">vector al que se le va a sacar su angulo de inclinación</param>
+            <returns>angulo de inclinacion del vector</returns>
+        </member>
+        <member name="T:RehabFramework.SeparadorDeLineas">
+            <summary>
+            clase de un modificador de cadenas que le inserta saltos de linea para que quepa en un ancho determinado
+            </summary>
+        </member>
+        <member name="M:RehabFramework.SeparadorDeLineas.#ctor(System.String)">
+            <summary>
+            constructor que recibe una cadena, la separa en palabras y las cadenas temporales y al stringbuilder los inicia como vacios
+            </summary>
+            <param name="cad">cadena a separar en palabras</param>
+        </member>
+        <member name="M:RehabFramework.SeparadorDeLineas.SepararPalabra(System.String,System.Single,Microsoft.Xna.Framework.Graphics.SpriteFont)">
+            <summary>
+            separa una palabra mayor que el ancho en lineas que quepan en el ancho
+            </summary>
+            <param name="palabra">palabra a separar</param>
+            <param name="ancho">ancho en lineas</param>
+            <param name="fuente">fuente de la palabra a separar</param>
+        </member>
+        <member name="M:RehabFramework.SeparadorDeLineas.SepararEnLineas(System.Single,Microsoft.Xna.Framework.Graphics.SpriteFont)">
+            <summary>
+            modifica la cadena agregando saltos de linea para que no se salga la cadena de un ancho definido
+            </summary>
+            <param name="ancho">ancho definido a ajustar la cadena</param>
+            <param name="fuente">tipo de letra de la cadena </param>
+            <returns>cadena separada en lineas</returns>
+        </member>
+        <member name="T:RehabFramework.BmpWriter">
+            <summary>
+            Clase para guardar texturas como imagenes bmp
+            </summary>
+        </member>
+        <member name="F:RehabFramework.BmpWriter.imageFormat">
+            <summary>
+            Formato con que se guardará la imagen
+            </summary>
+        </member>
+        <member name="M:RehabFramework.BmpWriter.#ctor(System.Int32,System.Int32,RehabFramework.BmpWriter.FormatoImagen)">
+            <summary>
+            Constructor de la calse que recibe las dimensiones de la textura
+            </summary>
+            <param name="width">ancho</param>
+            <param name="height">altura</param>
+        </member>
+        <member name="M:RehabFramework.BmpWriter.TextureToBmp(Microsoft.Xna.Framework.Graphics.Texture2D,System.String)">
+            <summary>
+            Método que guarda la textura como imagen BMP
+            </summary>
+            <param name="texture">Texture2D original</param>
+            <param name="filename">Nombre del archivo</param>
+        </member>
+        <member name="M:RehabFramework.BmpWriter.TextureToBmp(Microsoft.Xna.Framework.Graphics.Texture2D,System.String,Microsoft.Xna.Framework.Graphics.GraphicsDevice,Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            Método que recibe una Texture2D, el nombre del archivo, un graphics device y un vector2D con las dimensiones
+            con que se guardará la textura.
+            </summary>
+            <param name="texture">Texture2D original</param>
+            <param name="filename">String con elo nombre del archivo</param>
+            <param name="gd">GraphicsDevice para usar un RendetTarget2D</param>
+            <param name="dimensiones">Vector2D con las dimensiones con las que se debe guardar la textura</param>
+        </member>
+        <member name="T:RehabFramework.EVentana">
+            <summary>
+            clase de elemento de ventana
+            </summary>
+        </member>
+        <member name="M:RehabFramework.EVentana.#ctor(Microsoft.Xna.Framework.Graphics.GraphicsDevice)">
+            <summary>
+            constructor del elemento de ventana, activo inicia en falso
+            </summary>
+            <param name="gd">dispositivo grafico</param>
+        </member>
+        <member name="P:RehabFramework.EVentana.Activo">
+            <summary>
+            bandera que indica si está activo el elemento
+            </summary>
+        </member>
+        <member name="P:RehabFramework.EVentana.Posicion">
+            <summary>
+            posicion del elemento de ventana
+            </summary>
+        </member>
+        <member name="P:RehabFramework.EVentana.Width">
+            <summary>
+            ancho del elemento de ventana
+            </summary>
+        </member>
+        <member name="P:RehabFramework.EVentana.Height">
+            <summary>
+            alto del elemento de ventana
+            </summary>
+        </member>
+        <member name="T:RehabFramework.Linea">
+            <summary>
+            clase linea que hereda de elemento ventana
+            </summary>
+        </member>
+        <member name="M:RehabFramework.Linea.#ctor(Microsoft.Xna.Framework.Graphics.GraphicsDevice,System.Single,Microsoft.Xna.Framework.Color,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2,System.Single)">
+            <summary>
+            Constructor de Linea que recibe el graphics device, el grueso de la linea, el color, el vector de origen,
+            el vector de destino y la escala en que se dibujará la linea. tambien genera la textura blanca para dibujar
+            la linea recta.
+            </summary>
+            <param name="gd">dispositivo grafico</param>
+            <param name="grueso"></param>
+            <param name="clinea"></param>
+            <param name="Origen"></param>
+            <param name="Destino"></param>
+            <param name="escala"></param>
+        </member>
+        <member name="M:RehabFramework.Linea.AngleToVector(System.Single)">
+            <summary>
+            funcion que recibe un ángulo y devuelve un vector de 2 dimensiones
+            </summary>
+            <param name="angle"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RehabFramework.Linea.VectorToAngle(Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            funcion que recibe un vector de 2 dimensiones y devuelve un ángulo
+            </summary>
+            <param name="vector"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RehabFramework.Linea.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch)">
+            <summary>
+            funcion que dibuja una linea recta del punto de origen al punto destino tomando en cuenta
+            el grueso de la linea, la escala y el color
+            </summary>
+            <param name="sb"></param>
+        </member>
+        <member name="T:RehabFramework.Widget">
+            <summary>
+            clase widget del frame work
+            </summary>
+        </member>
+        <member name="M:RehabFramework.Widget.#ctor(Microsoft.Xna.Framework.Graphics.GraphicsDevice,Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            constructor de la clase widget
+            </summary>
+            <param name="gd">dispositivo grafico</param>
+            <param name="Posicion">posicion del widget</param>
+        </member>
+        <member name="T:RehabFramework.SelectorCantidad">
+            <summary>
+            clase selector cantidad que hereda de widget sirve para seleccionar la cantidad de algo por ejemplo tiempo
+            </summary>
+        </member>
+        <member name="M:RehabFramework.SelectorCantidad.SetRutas(Microsoft.Xna.Framework.Content.ContentManager,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            método que le dice a la clase donde buscar las imagenes y elementos necesarios donde buscar sus fuentes e imagenes
+            </summary>
+            <param name="content">carpeta de contenido</param>
+            <param name="CarpetaFuentes">direccion de la carpeta donde se almacenan las fuentes a utilizar</param>
+            <param name="CarpetaImagenes">direccion de la carpeta donde se almacenan las imagenes a utilizar</param>
+            <param name="AFArriba">archivo de imagen utilizado para la flecha hacia arriba</param>
+            <param name="AFAbajo">archivo de imagen utilizado para la flecha hacia abajo</param>
+            <param name="AFuente">archivo fuente utilizado para las letras</param>
+        </member>
+        <member name="M:RehabFramework.SelectorCantidad.#ctor(Microsoft.Xna.Framework.Content.ContentManager,Microsoft.Xna.Framework.Graphics.GraphicsDevice,Microsoft.Xna.Framework.Vector2,System.Single,System.Single,System.String)">
+            <summary>
+            widget de seleccion de cantidad
+            </summary>
+            <param name="content">manejador de contenido</param>
+            <param name="gd">dispositivo grafico de xna</param>
+            <param name="Posicion">posicion del widget</param>
+            <param name="LimiteInferior">limite inferior que puede tomar la cantidad</param>
+            <param name="LimiteSuperior">limite superior que pùede tomar la cantidad</param>
+            <param name="Unidades">unidades que tomara la cantidad</param>
+        </member>
+        <member name="M:RehabFramework.SelectorCantidad.Update(Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            metodo update del widget cantidad
+            </summary>
+            <param name="offset">offset del recuadro donde se dibuja</param>
+        </member>
+        <member name="M:RehabFramework.SelectorCantidad.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch,Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            metodo draw del widget cantidad
+            </summary>
+            <param name="sb">spritebatch</param>
+            <param name="offset">offset del recuadro donde se dibuja</param>
+        </member>
+        <member name="T:RehabFramework.SelectorMano">
+            <summary>
+            clase que representa al widget de selector de mano
+            </summary>
+        </member>
+        <member name="M:RehabFramework.SelectorMano.SetRutaImagenes(Microsoft.Xna.Framework.Content.ContentManager,System.String,System.String,System.String)">
+            <summary>
+            metodo que establece la ruta de donde tomara la informacion del contenido e imagenes
+            </summary>
+            <param name="content">ruta del contenido</param>
+            <param name="CarpetaImagenes">cadena donde se almacenan las imagenes que utilizara el widget</param>
+            <param name="AMDerecha">nombre del archivo que representa la mano derecha</param>
+            <param name="AMIzquierda">nombre del archivo de imagen que representa la mano izquierda</param>
+        </member>
+        <member name="M:RehabFramework.SelectorMano.#ctor(Microsoft.Xna.Framework.Content.ContentManager,Microsoft.Xna.Framework.Graphics.GraphicsDevice,Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            método constructor del selector de mano
+            </summary>
+            <param name="content">manejador de contenido</param>
+            <param name="gd">dispositivo grafico</param>
+            <param name="Posicion">posicion del widget</param>
+        </member>
+        <member name="M:RehabFramework.SelectorMano.SobreMano(Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            metodo que nos dice sobre que mano está el puntero del mouse
+            </summary>
+            <param name="posini">posicion inicial del widget</param>
+            <returns>un entero que representa la mano sobre la cual se encuentra el puntero
+            y si no se encuentra sobre ninguno regresa 0</returns>
+        </member>
+        <member name="M:RehabFramework.SelectorMano.Update(Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            método update del selector de mano
+            </summary>
+            <param name="offset">offset del recuadro donde está el widget</param>
+        </member>
+        <member name="M:RehabFramework.SelectorMano.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch,Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            método que dibuja el selector de mano
+            </summary>
+            <param name="sb">spritebatch</param>
+            <param name="offset">offset del recuadro donde se dibuja el widget</param>
+        </member>
+        <member name="T:RehabFramework.Boton">
+            <summary>
+            clase que representa el widget boton utilizado en los mensajes
+            </summary>
+        </member>
+        <member name="M:RehabFramework.Boton.#ctor(Microsoft.Xna.Framework.Graphics.GraphicsDevice,Microsoft.Xna.Framework.Content.ContentManager,System.String,System.String,Microsoft.Xna.Framework.Color,Microsoft.Xna.Framework.Color,Microsoft.Xna.Framework.Vector2,System.Single,System.EventHandler)">
+            <summary>
+            método constructor de la clase boton
+            </summary>
+            <param name="gd">dispositivo grafico</param>
+            <param name="content">manejador de contenido</param>
+            <param name="cadena">cadena de caracteres que se escribirá en el boton</param>
+            <param name="fuente">fuente de la cadena de caracteres</param>
+            <param name="CFondo">color de fondo del boton</param>
+            <param name="CFuente">color de la fuente de la cadena</param>
+            <param name="Posicion">posicion del bonton</param>
+            <param name="margen">margen del boton</param>
+            <param name="eh">Event handler del boton</param>
+        </member>
+        <member name="M:RehabFramework.Boton.Update(Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            metodo que actualiza el boton
+            </summary>
+            <param name="offset">offset del recuadro donde aparece el boton</param>
+        </member>
+        <member name="M:RehabFramework.Boton.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch,Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            metodo que dibuja el boton
+            </summary>
+            <param name="sb">spriteBatch</param>
+            <param name="offset">offset del recuadro del boton</param>
+        </member>
+        <member name="T:RehabFramework.ElementoTabla">
+            <summary>
+            clase que representa el elemento en una tabla
+            </summary>
+        </member>
+        <member name="M:RehabFramework.ElementoTabla.#ctor(Microsoft.Xna.Framework.Vector2,System.String)">
+            <summary>
+            constructor de la clase elemento tabla
+            </summary>
+            <param name="Coordenadas">coordenadas del elemento en la tabla</param>
+            <param name="nombre">nombre del elemento en la tabka</param>
+        </member>
+        <member name="T:RehabFramework.Grafica">
+            <summary>
+            clase que representa el elemento de ventana llamado grafica
+            </summary>
+        </member>
+        <member name="M:RehabFramework.Grafica.#ctor(Microsoft.Xna.Framework.Graphics.GraphicsDevice,System.Collections.Generic.List{RehabFramework.ElementoTabla},Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Color,Microsoft.Xna.Framework.Color,Microsoft.Xna.Framework.Color,Microsoft.Xna.Framework.Graphics.SpriteFont,Microsoft.Xna.Framework.Graphics.SpriteFont,System.String,System.String,System.String,System.Single,System.Single,System.Single)">
+            <summary>
+            Constructor de Grafica que recibe un graphicsdevice, la posicion de la esquina superior izquierda de la grafica,
+            la escala, las dimensiones a las que se tiene que ajustar, los colores para los ejes, la grafica y las fuentes,
+            las fuentes, las cadenas para el titulo de la grafica y sus ejes.
+            </summary>
+            <param name="gd">dispositivo grafico</param>
+            <param name="Posicion">posicion de la grafica</param>
+            <param name="Puntos">puntos originales donde se realiza la grafica</param>
+            <param name="Dimensiones">dimensiones de la grafica</param>
+            <param name="CEjes">color de los ejes</param>
+            <param name="CGrafica">color de la Grafica</param>
+            <param name="CFuente">color de la fuente</param>
+            <param name="FTitulo">fuente del titulo</param>
+            <param name="FEjes">fuente de los ejes</param>
+            <param name="Titulo">Titulo de la grafica</param>
+            <param name="TituloX">Titulo del eje X</param>
+            <param name="TituloY">Titulo del eje Y</param>
+            <param name="GruesoGrafica">grosor de la linea de la grafica</param>
+            <param name="GruesoEjes">grosor de los ejes</param>
+        </member>
+        <member name="M:RehabFramework.Grafica.CambiarDatos(System.String,System.String,System.String,System.Collections.Generic.List{RehabFramework.ElementoTabla})">
+            <summary>
+            Recibe las cadenas de los títulos y el nuevo conjunto de puntos que sustituyen a los antiguos
+            </summary>
+            <param name="Titulo">Cadena del título de la gráfica</param>
+            <param name="TituloX">Cadena del título del eje X</param>
+            <param name="TituloY">Cadena del título del eje Y</param>
+            <param name="Puntos">Lista de puntos de la gráfica</param>
+        </member>
+        <member name="M:RehabFramework.Grafica.MaxDim(System.Collections.Generic.List{RehabFramework.ElementoTabla})">
+            <summary>
+            obtiene los maximos en X y Y de la grafica y los devuelve en un Vector2
+            </summary>
+            <param name="pnts">puntos de la grafica</param>
+            <returns>vector que representa los puntos maximos de la grafica</returns>
+        </member>
+        <member name="M:RehabFramework.Grafica.MinDim(System.Collections.Generic.List{RehabFramework.ElementoTabla})">
+            <summary>
+            obtiene los minimos de X y Y del conjunto de puntos y los coloca en un
+            Vector2. si el menor  de los puntos es mayor a 0 se sustituye por 0
+            </summary>
+            <param name="pnts">puntos de la grafica</param>
+            <returns>vector que representa los puntos minimos de la grafica</returns>
+        </member>
+        <member name="M:RehabFramework.Grafica.AngleToVector(System.Single)">
+            <summary>
+            funcion que recibe un ángulo y devuelve un vector de 2 dimensiones
+            </summary>
+            <param name="angle"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RehabFramework.Grafica.VectorToAngle(Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            funcion que recibe un vector de 2 dimensiones y devuelve un ángulo
+            </summary>
+            <param name="vector"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RehabFramework.Grafica.DrawDot(Microsoft.Xna.Framework.Graphics.SpriteBatch,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Color,System.Single)">
+            <summary>
+            dibuja un punto en la grafica pudiendo definir el color y el grueso del punto
+            </summary>
+            <param name="sb">spritebatch</param>
+            <param name="Posicion">posicion de la grafica</param>
+            <param name="cpunto">color de los puntos</param>
+            <param name="grueso">grosor de los puntos</param>
+        </member>
+        <member name="M:RehabFramework.Grafica.DrawLine(Microsoft.Xna.Framework.Graphics.SpriteBatch,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Color,Microsoft.Xna.Framework.Vector2,System.Single)">
+            <summary>
+            dibuja una linea entre dos puntos definidos pudiendo determinar el color y el grueso de esta
+            </summary>
+            <param name="sb">Spritebatch</param>
+            <param name="Origen">punto de origen de la linea</param>
+            <param name="Destino">punto detino de la linea</param>
+            <param name="clinea">color de la linea</param>
+            <param name="escala">escala de la linea</param>
+            <param name="grueso">grosor de la linea</param>
+        </member>
+        <member name="M:RehabFramework.Grafica.EscalarVector(Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            permite escalar un vector con diferentes escalas para X y Y, devolviendo el vector escalado
+            y con la altura invertida
+            </summary>
+            <param name="vector">vector a escalar</param>
+            <param name="escala">escala a utilizar</param>
+            <returns>vector escalado con la altura invertida</returns>
+        </member>
+        <member name="M:RehabFramework.Grafica.InvertirAltura(Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            devuelve el vector con el signo contrario en la coordenada Y
+            </summary>
+            <param name="vector">vector a invertirle la altura</param>
+            <returns>vector de la altura invertida</returns>
+        </member>
+        <member name="M:RehabFramework.Grafica.EscalarPuntos(System.Collections.Generic.List{RehabFramework.ElementoTabla},Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            escala una lista de puntos y devuelve la nueva lista
+            </summary>
+            <param name="originales">lista de puntos originales a escalar</param>
+            <param name="escala">escala utilizada</param>
+            <returns>lusta de puntos escalados</returns>
+        </member>
+        <member name="M:RehabFramework.Grafica.DrawEjes(Microsoft.Xna.Framework.Graphics.SpriteBatch,Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            dibuja los ejes X y Y de la grafica con su respectiva escala
+            </summary>
+            <param name="sb">spritebatch</param>
+            <param name="offset">offset grafica</param>
+        </member>
+        <member name="M:RehabFramework.Grafica.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch)">
+            <summary>
+            Método que dibuja la gráfica y un letrero con las coordenadas del punto si el
+            puntero del mouse se encuentra sobre el punto.
+            </summary>
+            <param name="sb">SpriteBatch para dibujar las texturas</param>
+        </member>
+        <member name="M:RehabFramework.Grafica.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch,System.Boolean)">
+            <summary>
+            Método que dibuja la gráfica y un letrero con las coordenadas del punto si el
+            puntero del mouse se encuentra sobre el punto si el boolenao interactivo es true.
+            </summary>
+            <param name="sb">SpriteBatch</param>
+            <param name="interactivo">Booleano para la interactividad de la gráfica</param>
+        </member>
+        <member name="M:RehabFramework.Grafica.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch,Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            Método que dibuja la gráfica y un letrero con las coordenadas del punto si el
+            puntero del mouse se encuentra sobre el punto. La gráfica se dibuja en la 
+            posición determinada por el offset.
+            </summary>
+            <param name="sb">SpriteBatch</param>
+            <param name="offset">Vector2 para sobrecargar la posición de la gráfica</param>
+        </member>
+        <member name="M:RehabFramework.Grafica.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch,Microsoft.Xna.Framework.Vector2,System.Boolean)">
+            <summary>
+            Método que dibuja la gráfica y un letrero con las coordenadas del punto si el
+            puntero del mouse se encuentra sobre el punto si el boolenao interactivo es true. 
+            La gráfica se dibuja en la posición determinada por el offset.
+            </summary>
+            <param name="sb"></param>
+            <param name="offset"></param>
+            <param name="interactivo"></param>
+        </member>
+        <member name="M:RehabFramework.Grafica.GetTex(Microsoft.Xna.Framework.Graphics.GraphicsDevice)">
+            <summary>
+            Método que regresa un Texture2D de la gráfica
+            </summary>
+            <param name="grafd"> es el graphics device para poder guardar en un rendertarget</param>
+            <returns>Regresa una Textura 2D de la gráfica</returns>
+        </member>
+        <member name="P:RehabFramework.Grafica.TexturaDeGrafica">
+            <summary>
+            Textura que representa a los datos de la gráfica
+            </summary>
+        </member>
+        <member name="P:RehabFramework.Grafica.PorcentajeGrafica">
+            <summary>
+            Porcentaje del espacio correspondiente a la grafica
+            </summary>
+        </member>
+        <member name="P:RehabFramework.Grafica.PorcentajeMargen">
+            <summary>
+            Porcentaje del espacio de la grafica correspondiente al margen
+            </summary>
+        </member>
+        <member name="P:RehabFramework.Grafica.Puntos">
+            <summary>
+            propiedad para el manejo de los puntos de la grafica, permite revisar los puntos originales y al asignar nuevos puntos
+            tambien se actualizan los puntos escalados
+            </summary>
+        </member>
+        <member name="P:RehabFramework.Grafica.Titulo">
+            <summary>
+            cadena que se usa como titulo en la gráfica
+            </summary>
+        </member>
+        <member name="P:RehabFramework.Grafica.TituloX">
+            <summary>
+            cadena que se usa como titulo del eje X en la gráfica
+            </summary>
+        </member>
+        <member name="P:RehabFramework.Grafica.TituloY">
+            <summary>
+            cadena que se usa como titulo del eje Y en la gráfica
+            </summary>
+        </member>
+        <member name="P:RehabFramework.Grafica.FTitulo">
+            <summary>
+            fuente del titulo de la gráfica
+            </summary>
+        </member>
+        <member name="P:RehabFramework.Grafica.FEjes">
+            <summary>
+            fuente de los ejes de la gráfica
+            </summary>
+        </member>
+        <member name="P:RehabFramework.Grafica.DibujarEjes">
+            <summary>
+            booleano para dibujar los ejes de la gráfica
+            </summary>
+        </member>
+        <member name="P:RehabFramework.Grafica.DibujarPuntos">
+            <summary>
+            booleano para dibujar los puntos de la gráfica
+            </summary>
+        </member>
+        <member name="P:RehabFramework.Grafica.DibujarTituloEjes">
+            <summary>
+            booleano para dibujar los titulos de los ejes de la gráfica
+            </summary>
+        </member>
+        <member name="P:RehabFramework.Grafica.DibujarRectas">
+            <summary>
+            booleano para dibujar las rectas entre puntos de la gráfica
+            </summary>
+        </member>
+        <member name="P:RehabFramework.Grafica.CEjes">
+            <summary>
+            color de los ejes de la gráfica
+            </summary>
+        </member>
+        <member name="P:RehabFramework.Grafica.CGrafica">
+            <summary>
+            color de la gráfica
+            </summary>
+        </member>
+        <member name="P:RehabFramework.Grafica.CFuente">
+            <summary>
+            color de la fuente de la gráfica
+            </summary>
+        </member>
+        <member name="P:RehabFramework.Grafica.Dimensiones">
+            <summary>
+            Vector2 con las dimensiones de la gráfica
+            </summary>
+        </member>
+        <member name="P:RehabFramework.Grafica.GruesoGrafica">
+            <summary>
+            grueso con el que se dibujaran las rectas de la gráfica
+            </summary>
+        </member>
+        <member name="P:RehabFramework.Grafica.GruesoPuntos">
+            <summary>
+            grueso con el que se dibujaran los puntos de la gráfica
+            </summary>
+        </member>
+        <member name="P:RehabFramework.Grafica.GruesoEjes">
+            <summary>
+            grueso con el que se dibujaran los ejes de la gráfica
+            </summary>
+        </member>
+        <member name="P:RehabFramework.Grafica.GD">
+            <summary>
+            GraphicsDevice que sirve para el rendertarget y la generacion de la textura
+            </summary>
+        </member>
+        <member name="T:RehabFramework.CuadroDeTexto">
+            <summary>
+            clase que representa un cuadro de texto
+            </summary>
+        </member>
+        <member name="M:RehabFramework.CuadroDeTexto.#ctor(Microsoft.Xna.Framework.Graphics.GraphicsDevice,System.Single,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Color,Microsoft.Xna.Framework.Color,Microsoft.Xna.Framework.Graphics.SpriteFont,Microsoft.Xna.Framework.Graphics.Texture2D,System.String,RehabFramework.CuadroDeTexto.Tipo,Microsoft.Xna.Framework.Graphics.Texture2D,Microsoft.Xna.Framework.Graphics.Texture2D,System.Int32,System.EventHandler)">
+            <summary>
+            constructor que recibe el ancho que tendra el cuaqdro de texto, la altura no por que será dinámica,
+            un vector de posición que indica la posición de la esquina superior izquierda del cuadro de texto,
+            el color de fondo y el de la fuente, la fuente, una textura de fondo, la cadena de titulo del cuadro
+            de texto, y el tipo de dato que aceptara el cuadro de texto y la cantidad de caracteres aceptados.  
+            </summary>
+            <param name="gd">dispositivo grafico</param>
+            <param name="width">ancho del cuadro de texto</param>
+            <param name="posicion">posicion del cuadro de texto</param>
+            <param name="cfondo">color de fondo</param>
+            <param name="cfuente">color de la fuente</param>
+            <param name="fuente">fuente utilizada la cadena dentro del cuadro de texto</param>
+            <param name="fondo">textura de fondo </param>
+            <param name="titulo">titulo del cuadro de texto</param>
+            <param name="tdato">tipo de dato del cuadro de texto</param>
+            <param name="tbfondo1">textura base de fondo del cuadro de texto que aparece cuando el puntero
+            del mouse esta sobre el cuadro de texto</param>
+            <param name="tbfondo2">textura de fondo que aparece cuando se le da click al cuadro de texto</param>
+            <param name="longitud">longitud max de la cadena que acepta el cuadro de texto</param>
+            <param name="eh">Event handler</param>
+        </member>
+        <member name="M:RehabFramework.CuadroDeTexto.Update">
+            <summary>
+            Si el cuadro de texto está activo el stopwatch esta corriendo y se ejecuta el update del
+            keyboard handler el cual tiene la cadena que guarda los caracteres que usa el cuadro de 
+            texto. cada medio segundo cambia el caracter del cursor entre espacio y |. si el cuadro
+            de texto no está activo el stopwatch se detiene y el cursor se queda como espacio para
+            que no parezca haber cursor.
+            
+            </summary>
+        </member>
+        <member name="M:RehabFramework.CuadroDeTexto.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch,Microsoft.Xna.Framework.Vector2)">
+             <summary>
+            dibuja el cuadro de texto, primero el fondo, luego el titulo y luego la cadena de entrada 
+             </summary>
+             <param name="sb">spritebatch</param>
+             <param name="offset">offset</param>
+        </member>
+        <member name="T:RehabFramework.Recuadro">
+            <summary>
+            clase de Recuadro, es un rectangulo con una imagen, un titulo, una descripcion y un event handler
+            </summary>
+        </member>
+        <member name="M:RehabFramework.Recuadro.#ctor(Microsoft.Xna.Framework.Graphics.GraphicsDevice,System.String,System.String,Microsoft.Xna.Framework.Graphics.Texture2D,Microsoft.Xna.Framework.Graphics.SpriteFont,Microsoft.Xna.Framework.Graphics.SpriteFont,Microsoft.Xna.Framework.Color,Microsoft.Xna.Framework.Color,Microsoft.Xna.Framework.Vector2,System.Single,Microsoft.Xna.Framework.Graphics.Texture2D,Microsoft.Xna.Framework.Graphics.Texture2D,System.EventHandler)">
+            <summary>
+            constructor de recuadro, recibe un graphics device para crear la textura blanca, 
+            cadenas de titulo y descripcion, sus fuentes, colores de fondo y fuente, el vector
+            de posicion y el ancho
+            </summary>
+            <param name="gd">dispositivo grafico</param>
+            <param name="titulo">cadena que representa el titulo del recuadro</param>
+            <param name="descripcion">cadena mas pequeña que aparece abajo del titulo</param>
+            <param name="imagen">imagen asociada al recuadro</param>
+            <param name="ftitulo">fuente del titulo</param>
+            <param name="fdescripcion">fuente de la descripcion</param>
+            <param name="cfondo">color de fondo del recuadro</param>
+            <param name="cfuente">color de la fuente del recuadro</param>
+            <param name="posicion">posicion del recuadro</param>
+            <param name="width">ancho del recuadro</param>
+            <param name="TBFondo1">textura de fondo que aparece cuando el puntero se posiciona encima
+            del cuadro de texto</param>
+            <param name="TBFondo2">textura de fondo que aparece cuando se le da click al recuadro</param>
+            <param name="eh">Event Handler</param>
+        </member>
+        <member name="M:RehabFramework.Recuadro.AlturaTexto">
+            <summary>
+            metodo que te regresa la altura del texto escrito en el recuadro
+            </summary>
+            <returns>altura del texto</returns>
+        </member>
+        <member name="M:RehabFramework.Recuadro.AlturaWidgets">
+            <summary>
+            metodo que te regresa la altura de los widgets
+            </summary>
+            <returns>altura de los widgets</returns>
+        </member>
+        <member name="M:RehabFramework.Recuadro.AddWidget(RehabFramework.Widget)">
+            <summary>
+            metodo que agrega un widget nuevo al recuadro
+            </summary>
+            <param name="widget">nombre del widget a agregar</param>
+        </member>
+        <member name="M:RehabFramework.Recuadro.RemoveWidget(System.Int32)">
+            <summary>
+            remueve un widget del cuadro de texto
+            </summary>
+            <param name="index">indice del widget a remover</param>
+        </member>
+        <member name="M:RehabFramework.Recuadro.ClearWidgets">
+            <summary>
+            metodo que borra todos los widgets
+            </summary>
+        </member>
+        <member name="M:RehabFramework.Recuadro.Update(Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            metodo que actualiza el cuadro de textio
+            </summary>
+            <param name="offset">offset</param>
+        </member>
+        <member name="M:RehabFramework.Recuadro.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch,Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            metodo que dibuja el cuadro de texto
+            </summary>
+            <param name="sb">spritebatch</param>
+            <param name="offset">offset</param>
+        </member>
+        <member name="M:RehabFramework.Recuadro.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch,Microsoft.Xna.Framework.Vector2,System.Boolean)">
+            <summary>
+            metodo que dibuja el recuadro de texto en donde se le indica si se dibuja la textura
+            base de fondo
+            </summary>
+            <param name="sb">spritebatch</param>
+            <param name="offset">offset</param>
+            <param name="BFondo">bool que indica si se dibuja la textura base de fondo</param>
+        </member>
+        <member name="M:RehabFramework.Recuadro.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Color)">
+            <summary>
+            metodo que dibuja el cuadro de texto con un color de fondo
+            </summary>
+            <param name="sb">spritebatch</param>
+            <param name="offset">offset</param>
+            <param name="CFondo">color de fondo del cuadro</param>
+        </member>
+        <member name="T:RehabFramework.Mensaje">
+            <summary>
+            clase que representa los mensajes de alerta
+            </summary>
+        </member>
+        <member name="M:RehabFramework.Mensaje.#ctor(Microsoft.Xna.Framework.Graphics.GraphicsDevice,Microsoft.Xna.Framework.Content.ContentManager,System.String,System.String,System.String[],System.String,System.String,Microsoft.Xna.Framework.Color,Microsoft.Xna.Framework.Color,Microsoft.Xna.Framework.Vector2,System.Single,System.Single,System.Single)">
+            <summary>
+            metodo constructor de la clase mensajes
+            </summary>
+            <param name="gd">dispositivo grafico</param>
+            <param name="content">manejador de contenido</param>
+            <param name="CarpetaFuentes">direccion de la carpeta donde se encuentran las fuentes</param>
+            <param name="CarpetaImagenes">direccion de la carpeta donde se encuentran las imagenes</param>
+            <param name="imagenes">imagenes que utilizará</param>
+            <param name="ftitulo">fuente del titulo del mensaje</param>
+            <param name="fmensaje">fuente del mensaje</param>
+            <param name="cfondo">color de fondo del mensaje</param>
+            <param name="cfuente">color de fuente del mensaje</param>
+            <param name="posicion">posicion del mensaje</param>
+            <param name="width">ancho del mensaje</param>
+            <param name="espaciadowidgets"> espaciado entre widgets</param>
+            <param name="largoimagen">largo de la imagen utilizada</param>
+        </member>
+        <member name="M:RehabFramework.Mensaje.AlturaTexto">
+            <summary>
+            metodo que regresa la altura del texto en el mensaje
+            </summary>
+            <returns>altura del texto en el mensaje</returns>
+        </member>
+        <member name="M:RehabFramework.Mensaje.AlturaWidgets">
+            <summary>
+            metodo que regresa la altura de los widgets en el mensaje
+            </summary>
+            <returns>altura de widgets en el mensaje</returns>
+        </member>
+        <member name="M:RehabFramework.Mensaje.AddWidget(RehabFramework.Widget)">
+            <summary>
+            metodo que agrega widgets al mensaje
+            </summary>
+            <param name="widget">nombre del widget a agregar</param>
+        </member>
+        <member name="M:RehabFramework.Mensaje.RemoveWidget(System.Int32)">
+            <summary>
+            metodo que remueve un widget por medio de su indice
+            </summary>
+            <param name="index">indice del widget a eliminar</param>
+        </member>
+        <member name="M:RehabFramework.Mensaje.ClearWidgets">
+            <summary>
+            limpiar todos los widgets del mensaje
+            </summary>
+        </member>
+        <member name="M:RehabFramework.Mensaje.Update(Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            metodo update de los mensajes
+            </summary>
+            <param name="offset">offset</param>
+        </member>
+        <member name="M:RehabFramework.Mensaje.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch,Microsoft.Xna.Framework.Vector2)">
+            <summary>
+            metodo que dibuja los mensajes de alerta
+            </summary>
+            <param name="sb">spritebatch</param>
+            <param name="offset">offset</param>
+        </member>
+        <member name="M:RehabFramework.Mensaje.Show(Microsoft.Xna.Framework.Content.ContentManager,System.String,System.String,RehabFramework.Mensaje.Tipo,System.Collections.Generic.List{RehabFramework.Widget})">
+            <summary>
+            metodo que muestra el mensaje de alerta definiendo sus widgets
+            </summary>
+            <param name="content">manejador de contenido</param>
+            <param name="titulo">titulo del mensaje</param>
+            <param name="texmensaje">texto del mensaje</param>
+            <param name="tipo">tipo de mensaje</param>
+            <param name="widgets">widgets del mensaje</param>
+        </member>
+        <member name="M:RehabFramework.Mensaje.Show(Microsoft.Xna.Framework.Content.ContentManager,System.String,System.String,RehabFramework.Mensaje.Tipo)">
+            <summary>
+            metodo que muestra el mensaje de alerta definiendo su tipo predefinido
+            </summary>
+            <param name="content">manejador de contenido</param>
+            <param name="titulo">titulo del contenido</param>
+            <param name="texmensaje">texto del mensaje</param>
+            <param name="tipo">tipo de mensaje de alerta</param>
+        </member>
+    </members>
+</doc>

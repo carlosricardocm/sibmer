@@ -581,7 +581,7 @@ namespace Nave3D
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            stars = Content.Load<Texture2D>("Textures/B1_stars");
+            stars = Content.Load<Texture2D>("Textures/bg01");
             Descripcion = Content.Load<Texture2D>("Textures/Descripcion2");
             HudTex = Content.Load<Texture2D>("Textures/HudTex");
             ShieldTex = Content.Load<Texture2D>("Textures/ShieldTex2");
@@ -1533,7 +1533,8 @@ namespace Nave3D
 
                 tPos.Y += this.ManoIzq.Height * hndscl;
             }
-            float escala = (this.width - tPos.X < this.height - tPos.Y) ? this.width - tPos.X : this.height - tPos.Y;
+            float escala = ((int)(width * GameConstants.HudWidthPercentage) - GameConstants.MargenHud * 2 < this.height - tPos.Y - GameConstants.MargenHud) ?
+                (int)(width * GameConstants.HudWidthPercentage) - GameConstants.MargenHud * 2 : this.height - tPos.Y - GameConstants.MargenHud;
 
             switch (this.edonave)
             {

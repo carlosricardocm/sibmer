@@ -188,8 +188,6 @@ namespace Nave3D
             this.TexBlanca = new Texture2D(GraphicsDevice, 1, 1);
             this.TexBlanca.SetData(new Color[] { Color.White });
 
-            texcoord = new Rectangle(0, 0, (int)width, (int)height);
-
             PantallaCompleta = graphics.GraphicsDevice.Viewport;
             Juego = PantallaCompleta;
             Hud = PantallaCompleta;
@@ -582,6 +580,7 @@ namespace Nave3D
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             stars = Content.Load<Texture2D>("Textures/bg01");
+            texcoord = new Rectangle(0, 0, (int)stars.Width, (int)height);
             Descripcion = Content.Load<Texture2D>("Textures/Descripcion2");
             HudTex = Content.Load<Texture2D>("Textures/HudTex");
             ShieldTex = Content.Load<Texture2D>("Textures/ShieldTex2");
@@ -1102,7 +1101,6 @@ namespace Nave3D
                         //enemigos.SetPrimerJefe(ref listajefes, camara.Proyeccion, camara.Vista, camara.CamTar, 0, 0, 0);
                         break;
                 }
-                texcoord.Y -= 2;
             }
             else
             {
@@ -1394,8 +1392,15 @@ namespace Nave3D
             graphics.GraphicsDevice.Viewport = Juego;
 
             //fondo
+            texcoord.Y -= 2;
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Opaque, SamplerState.LinearWrap, null, null);
-            spriteBatch.Draw(stars, Vector2.Zero, texcoord, Color.White);
+            //spriteBatch.Draw(stars, Vector2.Zero, texcoord, Color.White);
+            //spriteBatch.Draw(stars, new Rectangle(0,0,(int)(width*(1-GameConstants.HudWidthPercentage)), (int)(height)), 
+            //    new Rectangle(0,0,(int)stars.Width,(int)stars.Height), 
+            //    Color.White, 0, Vector2.Zero, SpriteEffects.None, 0);
+            spriteBatch.Draw(stars, new Rectangle(0, 0, (int)(width * (1 - GameConstants.HudWidthPercentage)), (int)height),
+                texcoord,
+                Color.White, 0, Vector2.Zero, SpriteEffects.None, 0);
             spriteBatch.End();
 
             if (pause != true)
@@ -1409,7 +1414,8 @@ namespace Nave3D
                             nave.Draw(camara.Vista, Color.White.ToVector3());
                             break;
                         case estadoNave.premiado:
-                            nave.Draw(camara.Vista, Color.Lerp(Color.White, Color.Purple, this.tcolornave).ToVector3());
+                            //nave.Draw(camara.Vista, Color.Lerp(Color.White, Color.Purple, this.tcolornave).ToVector3());
+                            nave.Draw(camara.Vista, Color.Purple.ToVector3());
                             break;
                         case estadoNave.dañado:
                             nave.Draw(camara.Vista, Color.Lerp(Color.White, Color.Red, this.tcolornave).ToVector3());
@@ -1689,7 +1695,9 @@ namespace Nave3D
 
             //fondo
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Opaque, SamplerState.LinearWrap, null, null);
-            spriteBatch.Draw(stars, Vector2.Zero, texcoord, Color.White);
+            spriteBatch.Draw(stars, new Rectangle(0, 0, (int)width, (int)height),
+                texcoord,
+                Color.White, 0, Vector2.Zero, SpriteEffects.None, 0);
             spriteBatch.End();
 
             //Resultados

@@ -160,6 +160,7 @@
       <Name>HudFont</Name>
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
+      <SubType>Designer</SubType>
     </Compile>
     <Compile Include="Fonts\ResFont.spritefont">
       <Name>ResFont</Name>
